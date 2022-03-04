@@ -39,6 +39,7 @@ export const constantRoutes = [
 
   {
     path: '/404',
+    // redirect: '/',
     component: () => import('@/views/404'),
     hidden: true
   },
@@ -76,7 +77,6 @@ export const constantRoutes = [
       }
     ]
   },
-
   {
     path: '/form',
     component: Layout,
@@ -161,7 +161,51 @@ export const constantRoutes = [
   },
 
   // 404 page must be placed at the end !!!
+  // { path: '*', redirect: '/404', hidden: true }
+]
+
+export const asyncRoutes = [
+  {
+    path: '/permission',
+    component: Layout,
+    redirect: '/permission/page',
+    name: 'Permission',
+    meta: {
+      title: '权限页面',
+      roles: ['admin']
+    },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'page',
+        component: () => import('@/views/permission/page'),
+        name: 'PagePermission',
+        meta: {
+          title: 'Page Permission',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }
+    ]
+  },
+  {
+    path: '/test1',
+    component: Layout,
+    meta: {
+      title: 'Test',
+      roles: ['editor']
+    },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'index',
+        name: 'Test',
+        component: () => import('@/views/test1/index'),
+        meta: { title: 'Test', icon: 'form', roles: ['editor'] }
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
+
 ]
 
 const createRouter = () => new Router({

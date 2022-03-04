@@ -28,6 +28,8 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <el-button v-if="roles.includes('admin')" type="primary" size="small" class="msg-btn">通知</el-button>
+    <el-button v-permission="['editor']" type="primary" size="small" class="msg-btn2">自定义指令</el-button>
   </div>
 </template>
 
@@ -35,16 +37,21 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import permission from '@/directive/permission/permission'
 
 export default {
   components: {
     Breadcrumb,
     Hamburger
   },
+  directives: {
+    permission
+  },
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'avatar',
+      'roles'
     ])
   },
   methods: {
@@ -134,6 +141,18 @@ export default {
         }
       }
     }
+  }
+  .msg-btn{
+    position: absolute;
+    top: 50%;
+    right: 6%;
+    transform: translate(-50%, -50%);
+  }
+  .msg-btn2{
+    position: absolute;
+    top: 50%;
+    right: 12%;
+    transform: translate(-50%, -50%);
   }
 }
 </style>
